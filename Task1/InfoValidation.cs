@@ -7,56 +7,48 @@ using System.Threading.Tasks;
 
 namespace Task1
 {
-	public class InfoValidation
-	{
-		public string FirstName;
-		public string LastName;
-		public string PhoneNumber;
+    public class InfoValidation
+    {
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
+        public string PhoneNumber { get; private set; }
 
-		public InfoValidation(string first_name, string last_name, string phone_number)
-		{
-			string phoneNum;
-			if (isValidPhone(phone_number, out phoneNum))
-			{
-				FirstName = nameFormatting(first_name);
-				LastName = nameFormatting(last_name);
-				PhoneNumber = phoneFormatting(phoneNum);
-				Console.WriteLine($"{FirstName} {LastName} {PhoneNumber}");
-			}
-			else
-			{
-				Console.WriteLine($"Неверный формат: {phoneNum}");
-			}
-		}
+        public InfoValidation(string first_name, string last_name, string phone_number)
+        {
+            string phoneNum;
+            if (isValidPhone(phone_number, out phoneNum))
+            {
+                FirstName = nameFormatting(first_name);
+                LastName = nameFormatting(last_name);
+                PhoneNumber = phoneFormatting(phoneNum);
+                Console.WriteLine($"{FirstName} {LastName} {PhoneNumber}");
+            }
+            else
+            {
+                Console.WriteLine($"Неверный формат: {phoneNum}");
+            }
+        }
 
-		public string nameFormatting(string name)
-		{
-			string temp = name.Replace(" ", "");
-			string new_name = temp.Substring(0, 1).ToUpper() + temp.Substring(1);
-			Console.WriteLine($"{new_name}"); //убрать потом
-			return new_name;
-		}
+        public string nameFormatting(string name)
+        {
+            string new_name = name.Replace(" ", "");
+            return new_name.Substring(0, 1).ToUpper() + new_name.Substring(1);
+        }
 
-		public string phoneFormatting(string phone)
-		{
-			string temp = String.Concat("+", phone);
-			string new_phoneNum = $"{temp.Substring(0, 2)}({temp.Substring(2, 3)})" +
-				$"{temp.Substring(5, 3)}-{temp.Substring(8, 2)}-{temp.Substring(10)}";
-			Console.WriteLine($"{new_phoneNum}");
-			return new_phoneNum;
-			//+X(XXX) XXX - XX - XX.
-		}
+        public string phoneFormatting(string phone)
+        {
+            return $"+{phone.Substring(0, 2)}({phone.Substring(2, 3)})" +
+                $"{phone.Substring(5, 3)}-{phone.Substring(8, 2)}-{phone.Substring(10)}";
+        }
 
-		public bool isValidPhone(string phone, out string phoneNum)
-		{
-			Regex regex = new Regex(@"\D");
-			string formattedPhone = regex.Replace(phone, "");
-			phoneNum = formattedPhone;
-			Console.WriteLine($"{formattedPhone}"); //убрать потом
-			if (formattedPhone.Length == 11) return true;
-			return false;
-		}
-	}
+        public bool isValidPhone(string phone, out string phoneNum)
+        {
+            Regex regex = new Regex(@"\D");
+            phoneNum = regex.Replace(phone, "");
+            if (phoneNum.Length == 11) return true;
+            return false;
+        }
+    }
 }
 //Валидация и Форматирование Номера Телефона
 //Требования:
