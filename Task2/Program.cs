@@ -44,9 +44,8 @@ namespace Task2
             foreach (var sale in sortedSalesCollection)
             {
                 Console.Write($"{sale.Key} - ");
-                Console.WriteLine($"{Decimal.Round(sale.Average(x => x.bonus), 2)}");
+                Console.WriteLine($"{Decimal.Round(sale.Sum(x => x.bonus))}");
             }
-
         }
 
         public static List<Sales> bonusAdjust(List<Sales> collection)
@@ -55,18 +54,18 @@ namespace Task2
             {
                 if (string.IsNullOrWhiteSpace(sale.comment))
                 {
-                    sale.bonus = 0.5m;
+                    sale.bonus = sale.price * 0.005m;
                 }
             }
             return collection;
         }
-
+        //  a * 0.4 + b * 0.4 = 0.4 * ( a + b )
         public static List<Sales> premiumBonus(List<Sales> collection)
         {
             int counter = collection.Count(x => !string.IsNullOrWhiteSpace(x.comment));
             if (counter > 15)
             {
-                collection.ForEach(x => x.bonus += 0.4m);
+                collection.ForEach(x => x.bonus += x.bonus * 0.004m);
             }
             return collection;
         }

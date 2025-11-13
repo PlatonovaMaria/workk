@@ -13,12 +13,12 @@ namespace Task2
         public string comment { get; private set; }
         public decimal bonus { get; set; }
 
-        public Sales (string _manager, decimal _price, string _comment, decimal _bonus = 1m)
+        public Sales (string _manager, decimal _price, string _comment)
         {
             salesManager = _manager;
             price = _price;
             comment = _comment;
-            bonus = _bonus;
+            bonus = _price * 0.01m;
         }
     }
 }
